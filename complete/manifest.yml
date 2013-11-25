@@ -1,0 +1,8 @@
+---
+applications:
+- name: rest-service-guides
+  memory: 128M
+  instances: 1
+  host: rest-service-guides
+  domain: cfapps.io
+  path: build/libs/gs-rest-service-0.1.0.jar

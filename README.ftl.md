@@ -1,3 +1,6 @@
+<#assign project_id="gs-rest-service">
+<#assign spring_version="3.2.4.RELEASE">
+<#assign spring_boot_version="0.5.0.M4">
 This guide walks you through the process of creating a "hello world" [RESTful web service][u-rest] with Spring that includes headers for [Cross-Origin Resource Sharing (CORS)][u-cors] in the response.
 
 What you'll build
@@ -29,92 +32,24 @@ What you'll need
 ----------------
 
  - About 15 minutes
- - A favorite text editor or IDE
- - [JDK 6][jdk] or later
- - [Gradle 1.8+][gradle] or [Maven 3.0+][mvn]
- - You can also import the code from this guide as well as view the web page directly into [Spring Tool Suite (STS)][gs-sts] and work your way through it from there.
-
-[jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
-[gradle]: http://www.gradle.org/
-[mvn]: http://maven.apache.org/download.cgi
-[gs-sts]: /guides/gs/sts
+ - <@prereq_editor_jdk_buildtools/>
 
 
-How to complete this guide
---------------------------
-
-Like all Spring's [Getting Started guides](/guides/gs), you can start from scratch and complete each step, or you can bypass basic setup steps that are already familiar to you. Either way, you end up with working code.
-
-To **start from scratch**, move on to [Set up the project](#scratch).
-
-To **skip the basics**, do the following:
-
- - [Download][zip] and unzip the source repository for this guide, or clone it using [Git][u-git]:
-`git clone https://github.com/spring-guides/gs-rest-service.git`
- - cd into `gs-rest-service/initial`.
- - Jump ahead to [Create a resource representation class](#initial).
-
-**When you're finished**, you can check your results against the code in `gs-rest-service/complete`.
-[zip]: https://github.com/spring-guides/gs-rest-service/archive/master.zip
-[u-git]: /understanding/Git
+## <@how_to_complete_this_guide/>
 
 
 <a name="scratch"></a>
 Set up the project
 ------------------
 
-First you set up a basic build script. You can use any build system you like when building apps with Spring, but the code you need to work with [Gradle](http://gradle.org) and [Maven](https://maven.apache.org) is included here. If you're not familiar with either, refer to [Building Java Projects with Gradle](/guides/gs/gradle/) or [Building Java Projects with Maven](/guides/gs/maven).
+<@build_system_intro/>
 
-### Create the directory structure
-
-In a project directory of your choosing, create the following subdirectory structure; for example, with `mkdir -p src/main/java/hello` on *nix systems:
-
-    └── src
-        └── main
-            └── java
-                └── hello
+<@create_directory_structure_hello/>
 
 
-### Create a Gradle build file
-Below is the [initial Gradle build file](https://github.com/spring-guides/gs-rest-service/blob/master/initial/build.gradle). But you can also use Maven. The pom.xml file is included [right here](https://github.com/spring-guides/gs-rest-service/blob/master/initial/pom.xml). If you are using [Spring Tool Suite (STS)][gs-sts], you can import the guide directly.
+<@create_both_builds/>
 
-`build.gradle`
-```gradle
-buildscript {
-    repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenLocal()
-    }
-}
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-jar {
-    baseName = 'gs-rest-service'
-    version =  '0.1.0'
-}
-
-repositories {
-    mavenCentral()
-    maven { url "http://repo.spring.io/libs-snapshot" }
-}
-
-dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:0.5.0.M5")
-    compile("com.fasterxml.jackson.core:jackson-databind")
-    testCompile("junit:junit:4.11")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
-}
-```
-    
-[gs-sts]: /guides/gs/sts    
-
-> **Note:** This guide is using [Spring Boot](/guides/gs/spring-boot/).
+<@bootstrap_starter_pom_disclaimer/>
 
 
 <a name="initial"></a>
@@ -138,29 +73,7 @@ The `id` field is a unique identifier for the greeting, and `content` is the tex
 
 To model the greeting representation, you create a resource representation class. Provide a plain old java object with fields, constructors, and accessors for the `id` and `content` data:
 
-`src/main/java/hello/Greeting.java`
-```java
-package hello;
-
-public class Greeting {
-
-    private final long id;
-    private final String content;
-
-    public Greeting(long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-}
-```
+    <@snippet path="src/main/java/hello/Greeting.java" prefix="complete"/>
 
 > **Note:** As you see in steps below, Spring uses the [Jackson JSON][jackson] library to automatically marshal instances of type `Greeting` into JSON.
 
@@ -172,32 +85,7 @@ Create a resource controller
 
 In Spring's approach to building RESTful web services, HTTP requests are handled by a controller. These components are easily identified by the [`@Controller`][] annotation, and the `GreetingController` below handles `GET` requests for `/greeting` by returning a new instance of the `Greeting` class:
 
-`src/main/java/hello/GreetingController.java`
-```java
-package hello;
-
-import java.util.concurrent.atomic.AtomicLong;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-@Controller
-public class GreetingController {
-
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
-    @RequestMapping("/greeting")
-    public @ResponseBody Greeting greeting(
-            @RequestParam(value="name", required=false, defaultValue="World") String name) {
-    	System.out.println("==== in greeting ====");
-        return new Greeting(counter.incrementAndGet(),
-                            String.format(template, name));
-    }
-}
-```
+    <@snippet path="src/main/java/hello/GreetingController.java" prefix="complete"/>
 
 This controller is concise and simple, but there's plenty going on under the hood. Let's break it down step by step.
 
@@ -221,37 +109,7 @@ Filter requests for CORS
 So that the RESTful web service will include CORS access control headers in its response, you'll need to write a filter that adds those headers to the response.
 This `SimpleCORSFilter` class provides a simple implementation of such a filter:
 
-`src/main/java/hello/SimpleCORSFilter.java`
-```java
-package hello;
-import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
-
-@Component
-public class SimpleCORSFilter implements Filter {
-
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		HttpServletResponse response = (HttpServletResponse) res;
-		// response.setHeader("Access-Control-Allow-Origin", "*");
-		// response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-		// response.setHeader("Access-Control-Max-Age", "3600");
-		// response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-		chain.doFilter(req, res);
-	}
-
-	public void init(FilterConfig filterConfig) {}
-
-	public void destroy() {}
-
-}
-```
+    <@snippet path="src/main/java/hello/SimpleCORSFilter.java" prefix="complete"/>
 
 As it is written, `SimpleCORSFilter` responds to all requests with certain `Access-Control-*` headers.
 In this case, the headers are set to allow POST, GET, OPTIONS, or DELETE requests from clients originated from any host.
@@ -267,23 +125,7 @@ Although it is possible to package this service as a traditional [WAR][u-war] fi
 
 ### Create an Application class
 
-`src/main/java/hello/Application.java`
-```java
-package hello;
-
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.ComponentScan;
-
-@ComponentScan
-@EnableAutoConfiguration
-public class Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-}
-```
+    <@snippet path="src/main/java/hello/Application.java" prefix="complete"/>
 
 The `main()` method defers to the [`SpringApplication`][] helper class, providing `Application.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `Application` and to manage it as a component in the [Spring application context][u-application-context].
 
@@ -291,68 +133,11 @@ The `@ComponentScan` annotation tells Spring to search recursively through the `
 
 The [`@EnableAutoConfiguration`][] annotation switches on reasonable default behaviors based on the content of your classpath. For example, because the application depends on the embeddable version of Tomcat (tomcat-embed-core.jar), a Tomcat server is set up and configured with reasonable defaults on your behalf. And because the application also depends on Spring MVC (spring-webmvc.jar), a Spring MVC [`DispatcherServlet`][] is configured and registered for you — no `web.xml` necessary! Auto-configuration is a powerful, flexible mechanism. See the [API documentation][`@EnableAutoConfiguration`] for further details.
 
-### Build an executable JAR
+<@build_an_executable_jar_subhead/>
 
-Now that your `Application` class is ready, you simply instruct the build system to create a single, executable jar containing everything. This makes it easy to ship, version, and deploy the service as an application throughout the development lifecycle, across different environments, and so forth.
+<@build_an_executable_jar_with_both/>
 
-Below are the Gradle steps, but if you are using Maven, you can find the updated pom.xml [right here](https://github.com/spring-guides/gs-rest-service/blob/master/complete/pom.xml) and build it by typing `mvn clean package`.
-
-Update your Gradle `build.gradle` file's `buildscript` section, so that it looks like this:
-
-```groovy
-buildscript {
-    repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenLocal()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:0.5.0.M6")
-    }
-}
-```
-
-Further down inside `build.gradle`, add the following to the list of applied plugins:
-
-```groovy
-apply plugin: 'spring-boot'
-```
-You can see the final version of `build.gradle` [right here]((https://github.com/spring-guides/gs-rest-service/blob/master/complete/build.gradle).
-
-The [Spring Boot gradle plugin][spring-boot-gradle-plugin] collects all the jars on the classpath and builds a single "über-jar", which makes it more convenient to execute and transport your service.
-It also searches for the `public static void main()` method to flag as a runnable class.
-
-Now run the following command to produce a single executable JAR file containing all necessary dependency classes and resources:
-
-```sh
-$ ./gradlew build
-```
-
-If you are using Gradle, you can run the JAR by typing:
-
-```sh
-$ java -jar build/libs/gs-rest-service-0.1.0.jar
-```
-
-If you are using Maven, you can run the JAR by typing:
-
-```sh
-$ java -jar target/gs-rest-service-0.1.0.jar
-```
-
-[spring-boot-gradle-plugin]: https://github.com/spring-projects/spring-boot/tree/master/spring-boot-tools/spring-boot-gradle-plugin
-
-> **Note:** The procedure above will create a runnable JAR. You can also opt to [build a classic WAR file](/guides/gs/convert-jar-to-war/) instead.
-
-Run the service
--------------------
-If you are using Gradle, you can run your service at the command line this way:
-
-```sh
-$ ./gradlew clean build && java -jar build/libs/gs-rest-service-0.1.0.jar
-```
-
-> **Note:** If you are using Maven, you can run your service by typing `mvn clean package && java -jar target/gs-rest-service-0.1.0.jar`.
-
+<@run_the_application_with_both module="service"/>
 
 Logging output is displayed. The service should be up and running within a few seconds.
 
@@ -380,43 +165,12 @@ Now to test that the CORS headers are in place and allowing a Javascript client 
 
 First, create a simple Javascript file named `hello.js` with the following content:
 
-`public/hello.js`
-```js
-$(document).ready(function() {
-    $.ajax({
-        url: "http://localhost:8080/greeting"
-    }).then(function(data, status, jqxhr) {
-       $('.greeting-id').append(data.id);
-       $('.greeting-content').append(data.content);
-       console.log(jqxhr);
-    });
-});
-```
+    <@snippet path="public/hello.js" prefix="complete"/>
 
 This script uses jQuery to consume the REST service at <http://localhost:8080/greeting>.
 It is loaded by `index.html` as shown here:
 
-`public/index.html`
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello jQuery</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="hello.js"></script>
-    </head>
-
-    <body>
-        <div>
-            <p class="greeting-id">The ID is </p>
-            <p class="greeting-content">The content is </p>
-        </div>
-        <h4>Response headers:</h4>
-        <div class="response-headers">
-        </div>
-    </body>
-</html>
-```
+    <@snippet path="public/index.html" prefix="complete"/>
 
 > **Note:** This is essentially the REST client created in [Consuming a RESTful Web Service with jQuery][gs-consuming-rest-jquery], modified slightly to consume the service running on localhost, port 8080. See that guide for more details on this client.
 
@@ -446,14 +200,14 @@ Congratulations! You've just developed a RESTful web service including Cross-Ori
 
 
 
-[u-application-context]: /understanding/cors
-[u-rest]: /understanding/REST
-[u-json]: /understanding/JSON
-[u-view-templates]: /understanding/view-templates
+<@u_cors/>
+<@u_rest/>
+<@u_json/>
+<@u_view_templates/>
 [jackson]: http://wiki.fasterxml.com/JacksonHome
-[u-war]: /understanding/WAR
-[u-tomcat]: /understanding/Tomcat
-[u-application-context]: /understanding/application-context
+<@u_war/>
+<@u_tomcat/>
+<@u_application_context/>
 [`@Controller`]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Controller.html
 [`SpringApplication`]: http://docs.spring.io/spring-boot/docs/0.5.0.M3/api/org/springframework/boot/SpringApplication.html
 [`@EnableAutoConfiguration`]: http://docs.spring.io/spring-boot/docs/0.5.0.M3/api/org/springframework/boot/autoconfigure/EnableAutoConfiguration.html

@@ -1,20 +1,20 @@
 ## Related resources
 
-There's more to building RESTful web services than what is covered here. You can continue your exploration of Spring and REST with the following resources.
+There's more to building RESTful web services with CORS than what is covered here. You can continue your exploration of Spring and REST with the following resources.
 
 ### Getting Started guides
 
-* [Consuming a RESTful Web Service][gs-consuming-rest]
-* [Building a Hypermedia-Driven RESTful Web Service][gs-rest-hateoas]
-* [Consuming RESTful Web Services with Spring for Android][gs-consuming-rest-android]
-* [Consuming XML from a RESTful Web Service with Spring for Android][gs-consuming-rest-xml-android]
-* [Building a RESTful Web Service with Spring Boot Actuator][gs-actuator-service]
+* [Consuming a RESTful Web Service with jQuery][gs-consuming-rest-jquery]
+* [Consuming a RESTful Web Service with rest.js][gs-consuming-rest-restjs]
+* [Consuming a RESTful Web Service with Backbone.js][gs-consuming-rest-backbone]
+* [Consuming a RESTful Web Service with AngularJS][gs-consuming-rest-angularjs]
+* [Consuming a RESTful Web Service with Sencha Touch][gs-consuming-rest-sencha]
 
-[gs-consuming-rest]: /guides/gs/consuming-rest/
-[gs-consuming-rest-android]: /guides/gs/consuming-rest-android/
-[gs-rest-hateoas]: /guides/gs/rest-hateoas/
-[gs-consuming-rest-xml-android]: /guides/gs/consuming-rest-xml-android/
-[gs-actuator-service]: /guides/gs/actuator-service/
+[gs-consuming-rest-angularjs]: /guides/gs/consuming-rest-angularjs
+[gs-consuming-rest-jquery]: /guides/gs/consuming-rest-jquery
+[gs-consuming-rest-restjs]: /guides/gs/consuming-rest-restjs
+[gs-consuming-rest-backbone]: /guides/gs/consuming-rest-backbone
+[gs-consuming-rest-sencha]: /guides/gs/consuming-rest-sencha
 
 ### Tutorials
 
@@ -26,10 +26,12 @@ There's more to building RESTful web services than what is covered here. You can
 
 ### Concepts and technologies
 
+* [CORS][u-cors]
 * [REST][u-rest]
 * [JSON][u-json]
 * [View Templates][u-view-templates]
 
+[u-cors]: /understanding/cors
 [u-rest]: /understanding/REST
 [u-json]: /understanding/JSON
 [u-view-templates]: /understanding/view-templates

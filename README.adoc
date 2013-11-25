@@ -1,0 +1,248 @@
+:Component: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Component.html
+:jackson: http://wiki.fasterxml.com/JacksonHome
+:Controller: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Controller.html
+:DispatcherServlet: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
+:SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
+:ResponseBody: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
+:EnableAutoConfiguration: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/autoconfigure/EnableAutoConfiguration.html
+//TODO: Go a global search and replace to fix {`MappingJackson2HttpMessageConverter`} and then replace with {MappingJackson2HttpMessageConverter} (after fixing the link itself)
+:MappingJackson2HttpMessageConverter: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
+:gs-rest-service: link:/guides/gs/rest-service/
+:gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
+:gs-spring-boot: link:/guides/gs/spring-boot/
+:toc:
+:icons: font
+:source-highlighter: prettify
+:project_id: gs-rest-service
+:spring_version: 3.2.4.RELEASE
+:spring_boot_version: 0.5.0.M4
+This guide walks you through the process of creating a "hello world" link:/understanding/REST[RESTful web service] with Spring that includes headers for link:/understanding/CORS[Cross-Origin Resource Sharing (CORS)] in the response.
+
+== What you'll build
+
+You'll build a service that will accept HTTP GET requests at:
+
+    http://localhost:8080/greeting
+
+and respond with a link:/understanding/JSON[JSON] representation of a greeting:
+
+[source,json]
+----
+{"id":1,"content":"Hello, World!"}
+----
+
+You can customize the greeting with an optional `name` parameter in the query string:
+
+    http://localhost:8080/greeting?name=User
+
+The `name` parameter value overrides the default value of "World" and is reflected in the response:
+
+[source,json]
+----
+{"id":1,"content":"Hello, User!"}
+----
+
+This service differs slightly from the one described in {gs-rest-service}[Building a RESTful Web Service] in that it will have a filter that adds CORS headers to the response.
+
+== What you'll need
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
+
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/how_to_complete_this_guide.adoc[]
+
+
+[[scratch]]
+== Set up the project
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/build_system_intro.adoc[]
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/create_directory_structure_hello.adoc[]
+
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/create_both_builds.adoc[]
+
+`build.gradle`
+// AsciiDoc source formatting doesn't support groovy, so using java instead
+[source,java]
+----
+include::initial/build.gradle[]
+----
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/bootstrap_starter_pom_disclaimer.adoc[]
+
+
+[[initial]]
+== Create a resource representation class
+
+Now that you've set up the project and build system, you can create your web service.
+
+Begin the process by thinking about service interactions.
+
+The service will handle `GET` requests for `/greeting`, optionally with a `name` parameter in the query string. The `GET` request should return a `200 OK` response with JSON in the body that represents a greeting. It should look something like this:
+
+[source,json]
+----
+{
+    "id": 1,
+    "content": "Hello, World!"
+}
+----
+
+The `id` field is a unique identifier for the greeting, and `content` is the textual representation of the greeting.
+
+To model the greeting representation, you create a resource representation class. Provide a plain old java object with fields, constructors, and accessors for the `id` and `content` data:
+
+`src/main/java/hello/Greeting.java`
+[source,java]
+----
+include::complete/src/main/java/hello/Greeting.java[]
+----
+
+NOTE: As you see in steps below, Spring uses the {jackson}[Jackson JSON] library to automatically marshal instances of type `Greeting` into JSON.
+
+Next you create the resource controller that will serve these greetings.
+
+
+== Create a resource controller
+
+In Spring's approach to building RESTful web services, HTTP requests are handled by a controller. These components are easily identified by the {Controller}[`@Controller`] annotation, and the `GreetingController` below handles `GET` requests for `/greeting` by returning a new instance of the `Greeting` class:
+
+`src/main/java/hello/GreetingController.java`
+[source,java]
+----
+include::complete/src/main/java/hello/GreetingController.java[]
+----
+
+This controller is concise and simple, but there's plenty going on under the hood. Let's break it down step by step.
+
+The `@RequestMapping` annotation ensures that HTTP requests to `/greeting` are mapped to the `greeting()` method.
+
+NOTE: The above example does not specify `GET` vs. `PUT`, `POST`, and so forth, because `@RequestMapping` maps all HTTP operations by default. Use `@RequestMapping(method=GET)` to narrow this mapping.
+
+`@RequestParam` binds the value of the query string parameter `name` into the `name` parameter of the `greeting()` method. This query string parameter is not `required`; if it is absent in the request, the `defaultValue` of "World" is used.
+
+The implementation of the method body creates and returns a new `Greeting` object with `id` and `content` attributes based on the next value from the `counter`, and formats the given `name` by using the greeting `template`.
+
+A key difference between a traditional MVC controller and the RESTful web service controller above is the way that the HTTP response body is created. Rather than relying on a link:/understanding/view-templates[view technology] to perform server-side rendering of the greeting data to HTML, this RESTful web service controller simply populates and returns a `Greeting` object. The object data will be written directly to the HTTP response as JSON.
+
+To accomplish this, the {ResponseBody}[`@ResponseBody`] annotation on the `greeting()` method tells Spring MVC that it does not need to render the greeting object through a server-side view layer, but that instead that the greeting object returned _is_ the response body, and should be written out directly.
+
+The `Greeting` object must be converted to JSON. Thanks to Spring's HTTP message converter support, you don't need to do this conversion manually. Because {jackson}[Jackson 2] is on the classpath, Spring's {MappingJackson2HttpMessageConverter}[`MappingJackson2HttpMessageConverter`] is automatically chosen to convert the `Greeting` instance to JSON.
+
+== Filter requests for CORS
+
+So that the RESTful web service will include CORS access control headers in its response, you'll need to write a filter that adds those headers to the response.
+This `SimpleCORSFilter` class provides a simple implementation of such a filter:
+
+`src/main/java/hello/SimpleCORSFilter.java`
+[source,java]
+----
+include::complete/src/main/java/hello/SimpleCORSFilter.java[]
+----
+
+As it is written, `SimpleCORSFilter` responds to all requests with certain `Access-Control-*` headers.
+In this case, the headers are set to allow POST, GET, OPTIONS, or DELETE requests from clients originated from any host.
+The results of a preflight request may be cached for up to 3,600 seconds (1 hour).
+And the the request may include an `x-requested-with` header.
+
+NOTE: This is only a simple CORS filter. A more sophisticated CORS filter may set the header values differently for a given client and/or resource being requested. Or it may not set the headers at all in certain cases.
+
+== Make the application executable
+
+Although it is possible to package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach demonstrated below creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Tomcat[Tomcat] servlet container as the HTTP runtime, instead of deploying to an external instance.
+
+
+`src/main/java/hello/Application.java`
+[source,java]
+----
+include::complete/src/main/java/hello/Application.java[]
+----
+
+The `main()` method defers to the {SpringApplication}[`SpringApplication`] helper class, providing `Application.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `Application` and to manage it as a component in the link:/understanding/application-context[Spring application context].
+
+The `@ComponentScan` annotation tells Spring to search recursively through the `hello` package and its children for classes marked directly or indirectly with Spring's {Component}[`@Component`] annotation. This directive ensures that Spring finds and registers the `GreetingController`, because it is marked with `@Controller`, which in turn is a kind of `@Component` annotation.
+
+The {EnableAutoConfiguration}[`@EnableAutoConfiguration`] annotation switches on reasonable default behaviors based on the content of your classpath. For example, because the application depends on the embeddable version of Tomcat (tomcat-embed-core.jar), a Tomcat server is set up and configured with reasonable defaults on your behalf. And because the application also depends on Spring MVC (spring-webmvc.jar), a Spring MVC {DispatcherServlet}[`DispatcherServlet`] is configured and registered for you — no `web.xml` necessary! Auto-configuration is a powerful, flexible mechanism. See the {EnableAutoConfiguration}[API documentation] for further details.
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/build_an_executable_jar_subhead.adoc[]
+
+include::https://raw.github.com/spring-guides/getting-started-macros/master/build_an_executable_jar_with_both.adoc[]
+
+:module: service
+include::https://raw.github.com/spring-guides/getting-started-macros/master/run_the_application_with_both.adoc[]
+
+Logging output is displayed. The service should be up and running within a few seconds.
+
+
+== Test the service
+
+Now that the service is up, visit http://localhost:8080/greeting, where you see:
+
+[source,json]
+----
+{"id":1,"content":"Hello, World!"}
+----
+
+Provide a `name` query string parameter with http://localhost:8080/greeting?name=User. Notice how the value of the `content` attribute changes from "Hello, World!" to "Hello User!":
+
+[source,json]
+----
+{"id":2,"content":"Hello, User!"}
+----
+
+This change demonstrates that the `@RequestParam` arrangement in `GreetingController` is working as expected. The `name` parameter has been given a default value of "World", but can always be explicitly overridden through the query string.
+
+Notice also how the `id` attribute has changed from `1` to `2`. This proves that you are working against the same `GreetingController` instance across multiple requests, and that its `counter` field is being incremented on each call as expected.
+
+Now to test that the CORS headers are in place and allowing a Javascript client from another origin to access the service, you'll need to create a Javascript client to consume the service.
+
+First, create a simple Javascript file named `hello.js` with the following content:
+
+`public/hello.js`
+[source,js]
+----
+include::complete/public/hello.js[]
+----
+
+This script uses jQuery to consume the REST service at http://localhost:8080/greeting.
+It is loaded by `index.html` as shown here:
+
+`public/index.html`
+[source,html]
+----
+include::complete/public/index.html[]
+----
+
+NOTE: This is essentially the REST client created in {gs-consuming-rest-jquery}[Consuming a RESTful Web Service with jQuery], modified slightly to consume the service running on localhost, port 8080. See that guide for more details on how this client was developed.
+
+You can now run the client using the Spring Boot CLI (Command Line Interface). Spring Boot includes an embedded Tomcat server, which offers a simple approach to serving web content. See {gs-spring-boot}[Building an Application with Spring Boot] for more information about installing and using the CLI.
+
+In order to serve static content from Spring Boot's embedded Tomcat server, you'll also need to create a minimal amount of web application code so that Spring Boot knows to start Tomcat. The following `app.groovy` script is sufficient for letting Spring Boot know that you want to run Tomcat:
+
+`app.groovy`
+[source,groovy]
+----
+include::complete/app.groovy[]
+----
+
+Because the REST service is already running on localhost, port 8080, you'll need to be sure to start the client from another server and/or port.
+This will not only avoid a collision between the two applications, but will also ensure that the client code is served from a different origin than the service.
+To start the client running on localhost, port 9000:
+
+----
+spring run app.groovy -- --server.port=9000
+----
+
+Once the client starts, open http://localhost:9000 in your browser, where you should see:
+
+image::images/hello.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
+
+If the service response includes the CORS headers, then the ID and content will be rendered into the page. But if the CORS headers are missing (or insufficiently defined for the client), then the browser will fail the request and the values will not be rendered into the DOM:
+
+image::images/hello_fail.png[The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.]
+
+
+== Summary
+
+Congratulations! You've just developed a RESTful web service including Cross-Origin Resource Sharing with Spring. 

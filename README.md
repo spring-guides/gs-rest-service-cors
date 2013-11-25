@@ -422,6 +422,13 @@ It is loaded by `index.html` as shown here:
 
 You can now run the client using th Spring Boot CLI (Command Line Interface). Spring Boot includes an embedded Tomcat server, which offers a simple approach to serving web content. See [Building an Application with Spring Boot][gs-spring-boot] for more information about installing and using the CLI.
 
+In order to serve static content from Spring Boot's embedded Tomcat server, you'll also need to create a minimal amount of web application code so that Spring Boot knows to start Tomcat. The following `app.groovy` script is sufficient for letting Spring Boot know that you want to run Tomcat:
+
+`app.groovy`
+```groovy
+@Controller class JsApp { }
+```
+
 Because the REST service is already running on localhost, port 8080, you'll need to be sure to start the client from another server and/or port.
 This will not only avoid a collision between the two applications, but will also ensure that the client code is served from a different origin than the service.
 To start the client running on localhost, port 9000:

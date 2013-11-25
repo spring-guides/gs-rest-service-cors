@@ -239,10 +239,10 @@ public class SimpleCORSFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse response = (HttpServletResponse) res;
-		// response.setHeader("Access-Control-Allow-Origin", "*");
-		// response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-		// response.setHeader("Access-Control-Max-Age", "3600");
-		// response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		chain.doFilter(req, res);
 	}
 
@@ -418,7 +418,7 @@ It is loaded by `index.html` as shown here:
 </html>
 ```
 
-> **Note:** This is essentially the REST client created in [Consuming a RESTful Web Service with jQuery][gs-consuming-rest-jquery], modified slightly to consume the service running on localhost, port 8080. See that guide for more details on this client.
+> **Note:** This is essentially the REST client created in [Consuming a RESTful Web Service with jQuery][gs-consuming-rest-jquery], modified slightly to consume the service running on localhost, port 8080. See that guide for more details on how this client was developed.
 
 You can now run the client using th Spring Boot CLI (Command Line Interface). Spring Boot includes an embedded Tomcat server, which offers a simple approach to serving web content. See [Building an Application with Spring Boot][gs-spring-boot] for more information about installing and using the CLI.
 
@@ -430,13 +430,13 @@ To start the client running on localhost, port 9000:
 $ spring run app.groovy -- --server.port=9000
 ```
 
-Once the client starts, open http://localhost:8080 in your browser, where you should see:
+Once the client starts, open http://localhost:9000 in your browser, where you should see:
 
 ![Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.](images/hello.png)
 
 If the service response includes the CORS headers, then the ID and content will be rendered into the page. But if the CORS headers are missing (or insufficiently defined for the client), then the browser will fail the request and the values will not be rendered into the DOM:
 
-![The browser will fail the request if the CORS headers are missing from the response.](images/hello_fail.png)
+![The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.](images/hello_fail.png)
 
 
 Summary
@@ -446,7 +446,7 @@ Congratulations! You've just developed a RESTful web service including Cross-Ori
 
 
 
-[u-application-context]: /understanding/cors
+[u-cors]: /understanding/cors
 [u-rest]: /understanding/REST
 [u-json]: /understanding/JSON
 [u-view-templates]: /understanding/view-templates
@@ -461,5 +461,6 @@ Congratulations! You've just developed a RESTful web service including Cross-Ori
 [`@ResponseBody`]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
 [`MappingJackson2HttpMessageConverter`]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
 [`DispatcherServlet`]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
+[gs-rest-service]: /guides/gs/rest-service/
 [gs-consuming-rest-jquery]: /guides/gs/consuming-rest-jquery/
 [gs-spring-boot]: /guides/gs/spring-boot/

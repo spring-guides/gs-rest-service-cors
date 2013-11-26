@@ -144,7 +144,7 @@ include::complete/src/main/java/hello/SimpleCORSFilter.java[]
 As it is written, `SimpleCORSFilter` responds to all requests with certain `Access-Control-*` headers.
 In this case, the headers are set to allow POST, GET, OPTIONS, or DELETE requests from clients originated from any host.
 The results of a preflight request may be cached for up to 3,600 seconds (1 hour).
-And the the request may include an `x-requested-with` header.
+And the request may include an `x-requested-with` header.
 
 NOTE: This is only a simple CORS filter. A more sophisticated CORS filter may set the header values differently for a given client and/or resource being requested. Or it may not set the headers at all in certain cases.
 

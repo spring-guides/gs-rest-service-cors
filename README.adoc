@@ -1,12 +1,13 @@
-:Component: http://docs.spring.io/spring/docs/4.0.0.RC1/javadoc-api/org/springframework/stereotype/Component.html
+:spring_version: 4.0.0.RC1
+:Component: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Component.html
 :jackson: http://wiki.fasterxml.com/JacksonHome
-:Controller: http://docs.spring.io/spring/docs/4.0.0.RC1/javadoc-api/org/springframework/stereotype/Controller.html
-:DispatcherServlet: http://docs.spring.io/spring/docs/4.0.0.RC1/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
+:Controller: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
+:DispatcherServlet: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
 :SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
-:ResponseBody: http://docs.spring.io/spring/docs/4.0.0.RC1/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
+:ResponseBody: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
 :EnableAutoConfiguration: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/autoconfigure/EnableAutoConfiguration.html
 //TODO: Go a global search and replace to fix {`MappingJackson2HttpMessageConverter`} and then replace with {MappingJackson2HttpMessageConverter} (after fixing the link itself)
-:MappingJackson2HttpMessageConverter: http://docs.spring.io/spring/docs/4.0.0.RC1/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
+:MappingJackson2HttpMessageConverter: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
 :gs-rest-service: link:/guides/gs/rest-service/
 :gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
 :gs-spring-boot: link:/guides/gs/spring-boot/

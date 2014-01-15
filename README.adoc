@@ -1,3 +1,7 @@
+---
+tags: [rest, cors]
+projects: [spring-framework]
+---
 :spring_version: 4.0.0.RC1
 :Component: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Component.html
 :jackson: http://wiki.fasterxml.com/JacksonHome

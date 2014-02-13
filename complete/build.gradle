@@ -4,7 +4,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:0.5.0.M5")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC2")
     }
 }
 
@@ -24,12 +24,12 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:0.5.0.M5")
+    compile("org.springframework.boot:spring-boot-starter-web:1.0.0.RC2")
     compile("com.fasterxml.jackson.core:jackson-databind")
     compile("com.mangofactory:swagger-springmvc:0.6.5") {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    testCompile("junit:junit:4.11")
+    testCompile("junit:junit")
 }
 
 task wrapper(type: Wrapper) {

@@ -8,7 +8,6 @@ projects: [spring-framework]
 :DispatcherServlet: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
 :SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
 :ResponseBody: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
-//TODO: Go a global search and replace to fix {`MappingJackson2HttpMessageConverter`} and then replace with {MappingJackson2HttpMessageConverter} (after fixing the link itself)
 :MappingJackson2HttpMessageConverter: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
 :gs-rest-service: link:/guides/gs/rest-service/
 :gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
@@ -45,16 +44,15 @@ The `name` parameter value overrides the default value of "World" and is reflect
 {"id":1,"content":"Hello, User!"}
 ----
 
-This service differs slightly from the one described in {gs-rest-service}[Building a RESTful Web Service] in that it will have a filter that adds CORS headers to the response.
+This service differs slightly from the one described in {gs-rest-service}[Building a RESTful Web Service] in that it will
+use Spring Framework CORS support to add the relevant CORS response headers.
 
 == What you'll need
 
 :java_version: 1.8
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
 
-
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/how_to_complete_this_guide.adoc[]
-
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/hide-show-gradle.adoc[]
 
@@ -120,25 +118,45 @@ A key difference between a traditional MVC controller and the RESTful web servic
 
 To accomplish this, the {ResponseBody}[`@ResponseBody`] annotation on the `greeting()` method tells Spring MVC that it does not need to render the greeting object through a server-side view layer, but that instead that the greeting object returned _is_ the response body, and should be written out directly.
 
-The `Greeting` object must be converted to JSON. Thanks to Spring's HTTP message converter support, you don't need to do this conversion manually. Because {jackson}[Jackson 2] is on the classpath, Spring's {MappingJackson2HttpMessageConverter}[`MappingJackson2HttpMessageConverter`] is automatically chosen to convert the `Greeting` instance to JSON.
+The `Greeting` object must be converted to JSON. Thanks to Spring's HTTP message converter support, you don't need to do this conversion manually. Because {jackson}[Jackson] is on the classpath, Spring's {MappingJackson2HttpMessageConverter}[`MappingJackson2HttpMessageConverter`] is automatically chosen to convert the `Greeting` instance to JSON.
 
-== Filter requests for CORS
+== Enabling CORS
 
-So that the RESTful web service will include CORS access control headers in its response, you'll need to write a filter that adds those headers to the response.
-This `SimpleCORSFilter` class provides a simple implementation of such a filter:
 
-`src/main/java/hello/SimpleCORSFilter.java`
+=== Controller method CORS configuration
+
+So that the RESTful web service will include CORS access control headers in its response, you just have to add a `@CrossOrigin` annotation to the handler method:
+
+`src/main/java/hello/GreetingController.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/SimpleCORSFilter.java[]
+include::complete/src/main/java/hello/GreetingController.java[tags=annotation]
 ----
 
-As it is written, `SimpleCORSFilter` responds to all requests with certain `Access-Control-*` headers.
-In this case, the headers are set to allow POST, GET, OPTIONS, or DELETE requests from clients originated from any host.
-The results of a preflight request may be cached for up to 3,600 seconds (1 hour).
-And the request may include an `x-requested-with` header.
+This `@CrossOrigin` annotation enables cross-origin requests only for this specific method. By default, its allows all origins, all headers, the HTTP methods specified in the `@RequestMapping` annotation and a maxAge of 30 minutes is used. You can customize this behavior by specifying the value of one of the annotation attributes: `origins`, `methods`, `allowedHeaders`, `exposedHeaders`, `allowCredentials` or `maxAge`. In this example, we only allow `http://localhost:8080` to send cross-origin requests.
 
-NOTE: This is only a simple CORS filter. A more sophisticated CORS filter may set the header values differently for a given client and/or resource being requested. Or it may not set the headers at all in certain cases.
+NOTE: it is also possible to add this annotation at controller class level as well, in order to enable CORS on all handler methods of this class.
+
+=== Global CORS configuration
+
+As an alternative to fine-grained annotation-based configuration, you can also define some global CORS configuration as well. This is similar to using a `Filter` based solution, but can be declared withing Spring MVC and combined with fine-grained `@CrossOrigin` configuration. By default all origins and `GET`, `HEAD` and `POST` methods are allowed.
+
+`src/main/java/hello/GreetingController.java`
+[source,java]
+----
+include::complete/src/main/java/hello/Application.java[tags=javaconfig]
+----
+
+`src/main/java/hello/Application.java`
+[source,java]
+----
+include::complete/src/main/java/hello/Application.java[tags=corsConfigurer]
+----
+
+
+You can easily change any properties (like the `allowedOrigins` one in the example), as well as only apply this CORS configuration to a specific path pattern.
+Global and controller level CORS configurations can also be combined.
+
 
 == Make the application executable
 
@@ -209,22 +227,12 @@ include::complete/public/index.html[]
 
 NOTE: This is essentially the REST client created in {gs-consuming-rest-jquery}[Consuming a RESTful Web Service with jQuery], modified slightly to consume the service running on localhost, port 8080. See that guide for more details on how this client was developed.
 
-You can now run the client using the Spring Boot CLI (Command Line Interface). Spring Boot includes an embedded Tomcat server, which offers a simple approach to serving web content. See {gs-spring-boot}[Building an Application with Spring Boot] for more information about installing and using the CLI.
-
-In order to serve static content from Spring Boot's embedded Tomcat server, you'll also need to create a minimal amount of web application code so that Spring Boot knows to start Tomcat. The following `app.groovy` script is sufficient for letting Spring Boot know that you want to run Tomcat:
-
-`app.groovy`
-[source,groovy]
-----
-include::complete/app.groovy[]
-----
-
 Because the REST service is already running on localhost, port 8080, you'll need to be sure to start the client from another server and/or port.
 This will not only avoid a collision between the two applications, but will also ensure that the client code is served from a different origin than the service.
 To start the client running on localhost, port 9000:
 
 ----
-spring run app.groovy -- --server.port=9000
+mvn spring-boot:run -Dserver.port=9000
 ----
 
 Once the client starts, open http://localhost:9000 in your browser, where you should see:

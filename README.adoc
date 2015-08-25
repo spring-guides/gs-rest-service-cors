@@ -239,3 +239,6 @@ image::images/hello_fail.png[The browser will fail the request if the CORS heade
 == Summary
 
 Congratulations! You've just developed a RESTful web service including Cross-Origin Resource Sharing with Spring. 
+
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
+

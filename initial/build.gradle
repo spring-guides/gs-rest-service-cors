@@ -8,13 +8,11 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
     baseName = 'gs-rest-service-cors'
-    version =  '0.1.0'
+    version =  '0.2.0'
 }
 
 repositories {
@@ -26,7 +24,6 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("com.fasterxml.jackson.core:jackson-databind")
 }
 
 task wrapper(type: Wrapper) {

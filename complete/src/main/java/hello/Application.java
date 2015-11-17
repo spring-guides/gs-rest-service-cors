@@ -14,7 +14,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    // tag::corsConfigurer[]
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
@@ -24,6 +23,5 @@ public class Application {
             }
         };
     }
-    // end::corsConfigurer[]
 
 }

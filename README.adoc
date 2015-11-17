@@ -101,7 +101,7 @@ In Spring's approach to building RESTful web services, HTTP requests are handled
 `src/main/java/hello/GreetingController.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/GreetingController.java[]
+include::complete/src/main/java/hello/GreetingController.java[lines=1..16;18..22;29..30]
 ----
 
 This controller is concise and simple, but there's plenty going on under the hood. Let's break it down step by step.
@@ -130,7 +130,7 @@ So that the RESTful web service will include CORS access control headers in its 
 `src/main/java/hello/GreetingController.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/GreetingController.java[tags=annotation]
+include::complete/src/main/java/hello/GreetingController.java[lines=17..22]
 ----
 
 This `@CrossOrigin` annotation enables cross-origin requests only for this specific method. By default, its allows all origins, all headers, the HTTP methods specified in the `@RequestMapping` annotation and a maxAge of 30 minutes is used. You can customize this behavior by specifying the value of one of the annotation attributes: `origins`, `methods`, `allowedHeaders`, `exposedHeaders`, `allowCredentials` or `maxAge`. In this example, we only allow `http://localhost:8080` to send cross-origin requests.
@@ -144,13 +144,13 @@ As an alternative to fine-grained annotation-based configuration, you can also d
 `src/main/java/hello/GreetingController.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/Application.java[tags=javaconfig]
+include::complete/src/main/java/hello/GreetingController.java[lines=24..28]
 ----
 
 `src/main/java/hello/Application.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/Application.java[tags=corsConfigurer]
+include::complete/src/main/java/hello/Application.java[lines=17..25]
 ----
 
 
@@ -166,7 +166,7 @@ Although it is possible to package this service as a traditional link:/understan
 `src/main/java/hello/Application.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/Application.java[]
+include::complete/src/main/java/hello/Application.java[lines=1..15;26..27]
 ----
 
 `@SpringBootApplication` is a convenience annotation that adds all of the following:

@@ -1,7 +1,7 @@
 cd $(dirname $0)
 cd ../complete
 mvn clean package
-java -jar target/gs-rest-service-cors-0.2.0.jar &
+java -jar target/gs-rest-service-cors-0.1.0.jar &
 PID=$!
 sleep 15
 curl -s http://localhost:8080/greeting > target/actual.json
@@ -37,7 +37,7 @@ fi
 rm -rf target
 
 ./gradlew clean build
-java -jar build/libs/gs-rest-service-cors-0.2.0.jar &
+java -jar build/libs/gs-rest-service-cors-0.1.0.jar &
 PID=$!
 sleep 15
 curl -s http://localhost:8080/greeting > build/actual.json

@@ -134,7 +134,7 @@ So that the RESTful web service will include CORS access control headers in its 
 include::complete/src/main/java/hello/GreetingController.java[lines=16..21]
 ----
 
-This `@CrossOrigin` annotation enables cross-origin requests only for this specific method. By default, its allows all origins, all headers, the HTTP methods specified in the `@RequestMapping` annotation and a maxAge of 30 minutes is used. You can customize this behavior by specifying the value of one of the annotation attributes: `origins`, `methods`, `allowedHeaders`, `exposedHeaders`, `allowCredentials` or `maxAge`. In this example, we only allow `http://localhost:8080` to send cross-origin requests.
+This `@CrossOrigin` annotation enables cross-origin requests only for this specific method. By default, its allows all origins, all headers, the HTTP methods specified in the `@RequestMapping` annotation and a maxAge of 30 minutes is used. You can customize this behavior by specifying the value of one of the annotation attributes: `origins`, `methods`, `allowedHeaders`, `exposedHeaders`, `allowCredentials` or `maxAge`. In this example, we only allow `http://localhost:9000` to send cross-origin requests.
 
 NOTE: it is also possible to add this annotation at controller class level as well, in order to enable CORS on all handler methods of this class.
 

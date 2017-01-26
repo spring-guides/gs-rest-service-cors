@@ -5,6 +5,7 @@
 .classpath
 .project
 .settings
+.springBeans
 bin
 build
 target

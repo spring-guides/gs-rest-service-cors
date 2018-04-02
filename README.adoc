@@ -1,7 +1,3 @@
----
-tags: [rest, cors]
-projects: [spring-framework]
----
 :spring_version: current
 :jackson: http://wiki.fasterxml.com/JacksonHome
 :Controller: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html

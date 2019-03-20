@@ -1,10 +1,10 @@
 :spring_version: current
-:jackson: http://wiki.fasterxml.com/JacksonHome
-:Controller: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
-:DispatcherServlet: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
-:SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
-:ResponseBody: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
-:MappingJackson2HttpMessageConverter: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
+:jackson: https://wiki.fasterxml.com/JacksonHome
+:Controller: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
+:DispatcherServlet: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
+:SpringApplication: https://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
+:ResponseBody: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
+:MappingJackson2HttpMessageConverter: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
 :gs-rest-service: link:/guides/gs/rest-service/
 :gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
 :gs-spring-boot: link:/guides/gs/spring-boot/

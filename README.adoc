@@ -13,7 +13,7 @@
 :source-highlighter: prettify
 :project_id: gs-rest-service-cors
 :spring_version: current
-:spring_boot_version: 2.0.5.RELEASE
+:spring_boot_version: 2.0.8.RELEASE
 This guide walks you through the process of creating a "hello world" link:/understanding/REST[RESTful web service] with Spring that includes headers for link:/understanding/CORS[Cross-Origin Resource Sharing (CORS)] in the response.
 You will find more information about Spring CORS support in this link:/blog/2015/06/08/cors-support-in-spring-framework[blog post].
 

@@ -1,4 +1,4 @@
-package hello;
+package com.example.restservicecors;
 
 import static org.junit.Assert.assertEquals;
 

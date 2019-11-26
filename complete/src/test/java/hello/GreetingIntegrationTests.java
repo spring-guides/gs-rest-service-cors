@@ -24,28 +24,28 @@ public class GreetingIntegrationTests {
 
   @Test
   public void corsWithAnnotation() throws Exception {
-    ResponseEntity<Greeting> entity = this.restTemplate.exchange(
-        RequestEntity.get(uri("/greeting")).header(HttpHeaders.ORIGIN, "http://localhost:9000").build(),
-        Greeting.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
-    Greeting greeting = entity.getBody();
-    assertEquals("Hello, World!", greeting.getContent());
+	ResponseEntity<Greeting> entity = this.restTemplate.exchange(
+		RequestEntity.get(uri("/greeting")).header(HttpHeaders.ORIGIN, "http://localhost:9000").build(),
+		Greeting.class);
+	assertEquals(HttpStatus.OK, entity.getStatusCode());
+	assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
+	Greeting greeting = entity.getBody();
+	assertEquals("Hello, World!", greeting.getContent());
   }
 
   @Test
   public void corsWithJavaconfig() {
-    ResponseEntity<Greeting> entity = this.restTemplate.exchange(
-        RequestEntity.get(uri("/greeting-javaconfig")).header(HttpHeaders.ORIGIN, "http://localhost:9000").build(),
-        Greeting.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
-    Greeting greeting = entity.getBody();
-    assertEquals("Hello, World!", greeting.getContent());
+	ResponseEntity<Greeting> entity = this.restTemplate.exchange(
+		RequestEntity.get(uri("/greeting-javaconfig")).header(HttpHeaders.ORIGIN, "http://localhost:9000").build(),
+		Greeting.class);
+	assertEquals(HttpStatus.OK, entity.getStatusCode());
+	assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
+	Greeting greeting = entity.getBody();
+	assertEquals("Hello, World!", greeting.getContent());
   }
 
   private URI uri(String path) {
-    return restTemplate.getRestTemplate().getUriTemplateHandler().expand(path);
+	return restTemplate.getRestTemplate().getUriTemplateHandler().expand(path);
   }
 
 }

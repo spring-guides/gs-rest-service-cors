@@ -81,7 +81,7 @@ The `id` field is a unique identifier for the greeting, and `content` is the tex
 To model the greeting representation, you create a resource representation class. Provide a plain old java object with fields, constructors, and accessors for the `id` and `content` data:
 
 `src/main/java/hello/Greeting.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/Greeting.java[]
 ----
@@ -96,7 +96,7 @@ Next you create the resource controller that will serve these greetings.
 In Spring's approach to building RESTful web services, HTTP requests are handled by a controller. These components are easily identified by the {Controller}[`@Controller`] annotation, and the `GreetingController` below handles `GET` requests for `/greeting` by returning a new instance of the `Greeting` class:
 
 `src/main/java/hello/GreetingController.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/GreetingController.java[lines=1..15;17..22;29..30]
 ----
@@ -125,7 +125,7 @@ The `Greeting` object must be converted to JSON. Thanks to Spring's HTTP message
 So that the RESTful web service will include CORS access control headers in its response, you just have to add a `@CrossOrigin` annotation to the handler method:
 
 `src/main/java/hello/GreetingController.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/GreetingController.java[lines=16..21]
 ----
@@ -139,13 +139,13 @@ NOTE: it is also possible to add this annotation at controller class level as we
 As an alternative to fine-grained annotation-based configuration, you can also define some global CORS configuration as well. This is similar to using a `Filter` based solution, but can be declared within Spring MVC and combined with fine-grained `@CrossOrigin` configuration. By default all origins and `GET`, `HEAD` and `POST` methods are allowed.
 
 `src/main/java/hello/GreetingController.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/GreetingController.java[lines=23..27]
 ----
 
 `src/main/java/hello/Application.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/Application.java[lines=17..25]
 ----
@@ -161,7 +161,7 @@ Although it is possible to package this service as a traditional link:/understan
 
 
 `src/main/java/hello/Application.java`
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/hello/Application.java[lines=1..15;26..27]
 ----

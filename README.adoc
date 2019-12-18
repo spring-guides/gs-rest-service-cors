@@ -147,7 +147,7 @@ include::complete/src/main/java/hello/GreetingController.java[lines=23..27]
 `src/main/java/hello/Application.java`
 [source,java,tabsize=2]
 ----
-include::complete/src/main/java/hello/Application.java[lines=17..25]
+include::complete/src/main/java/hello/Application.java[lines=16..25]
 ----
 
 

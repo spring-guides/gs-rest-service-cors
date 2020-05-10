@@ -309,6 +309,9 @@ include::complete/src/main/java/com/example/restservicecors/RestServiceCorsAppli
 You can easily change any properties (such as `allowedOrigins` in the example), as well as
 apply this CORS configuration to a specific path pattern.
 
+If you would like to include all paths instead of a specific path, you can replace `/greeting-javaconfig` with the pattern `/**`.
+And in order to allow any origin, you can leave out the `allowedOrigins` method call.
+
 TIP: You can combine global- and controller-level CORS configuration.
 
 == Creating the Application Class

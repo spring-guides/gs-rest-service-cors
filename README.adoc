@@ -13,7 +13,7 @@
 :source-highlighter: prettify
 :project_id: gs-rest-service-cors
 :spring_version: current
-:spring_boot_version: 2.1.6.RELEASE
+:spring_boot_version: 2.3.2.RELEASE
 
 This guide walks you through the process of creating a "`Hello, World`" RESTful web
 service with Spring that includes headers for Cross-Origin Resource Sharing (CORS) in the
@@ -70,14 +70,7 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 For all Spring applications, you should start with the https://start.spring.io[Spring
 Initializr]. The Initializr offers a fast way to pull in all the dependencies you need for
 an application and does a lot of the setup for you. This example needs only the Spring Web
-dependency. The following image shows the Initializr set up for this sample project:
-
-image::images/initializr.png[]
-
-NOTE: The preceding image shows the Initializr with Maven chosen as the build tool. You
-can also use Gradle. It also shows values of `com.example` and `rest-service-cors` as the
-Group and Artifact, respectively. You will use those values throughout the rest of this
-sample.
+dependency.
 
 The following listing shows the `pom.xml` file that is created when you choose Maven:
 

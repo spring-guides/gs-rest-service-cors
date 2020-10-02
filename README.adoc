@@ -422,6 +422,18 @@ run the following Maven command:
 ----
 ====
 
+If you use Gradle, you can append the following snippet to build.gradle
+====
+[source,text]
+----
+bootRun{
+	systemProperty 'server.port', '9000'
+}
+----
+====
+Then run the following Gradle command:
+./gradlew bootRun -Dserver.port=9000
+
 Once the client starts, open http://localhost:9000 in your browser, where you should see
 the following:
 

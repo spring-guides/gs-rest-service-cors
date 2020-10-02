@@ -432,7 +432,11 @@ bootRun{
 ----
 ====
 Then run the following Gradle command:
+[source,bash]
+----
 ./gradlew bootRun -Dserver.port=9000
+----
+====
 
 Once the client starts, open http://localhost:9000 in your browser, where you should see
 the following:

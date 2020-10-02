@@ -431,7 +431,7 @@ bootRun{
 }
 ----
 ====
-Then run the following Gradle command:
+Then you can run the following Gradle command:
 [source,bash]
 ----
 ./gradlew bootRun -Dserver.port=9000

@@ -8,6 +8,7 @@
 :gs-rest-service: link:/guides/gs/rest-service/
 :gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
 :gs-spring-boot: link:/guides/gs/spring-boot/
+:images: https://github.com/spring-guides/gs-rest-service-cors/raw/master/images
 :toc:
 :icons: font
 :source-highlighter: prettify
@@ -437,7 +438,7 @@ If you use Gradle, you can use this command:
 Once the app starts, open http://localhost:8080 in your browser, where you should see
 the following:
 
-image::images/hello.png[The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.]
+image::{images}/hello.png[The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.]
 
 To test the CORS behaviour, you need to start the client from another server or port. 
 Doing so not only avoids a collision
@@ -463,7 +464,7 @@ If you use Gradle, you can use this command:
 Once the app starts, open http://localhost:9000 in your browser, where you should see
 the following:
 
-image::images/hello_fail.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
+image::{images}/hello_fail.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
 
 If the service response includes the CORS headers, then the ID and content are rendered
 into the page. But if the CORS headers are missing (or insufficient for the

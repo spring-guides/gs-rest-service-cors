@@ -23,7 +23,7 @@ link:/blog/2015/06/08/cors-support-in-spring-framework[blog post].
 
 == What You Will Build
 
-You will build a service that accepts HTTP POST requests at
+You will build a service that accepts HTTP GET requests at
 `http://localhost:8080/greeting` and responds with a JSON representation of a greeting, as
 the following listing shows:
 
@@ -181,7 +181,7 @@ of type `Greeting` into JSON.
 In Spring's approach to building RESTful web services, HTTP requests are handled by a
 controller. These components are easily identified by the {Controller}[`@Controller`]
 annotation, and the `GreetingController` shown in the following listing (from
-`src/main/java/com/example/restservicecors/GreetingController.java`) handles `POST`
+`src/main/java/com/example/restservicecors/GreetingController.java`) handles `GET`
 requests for `/greeting` by returning a new instance of the `Greeting` class:
 
 ====
@@ -196,9 +196,10 @@ break it down step by step.
 
 The `@RequestMapping` annotation ensures that HTTP requests to `/greeting` are mapped to the `greeting()` method.
 
-NOTE: The preceding example uses the `@PostMapping` annotation, which acts as a shortcut
-for `@RequestMapping(method = RequestMethod.POST)`. We use `POST` in this case because it
-requires the browser to send a CORS preflight request (see below).
+NOTE: The preceding example uses the `@GetMapping` annotation, which acts as a shortcut
+for `@RequestMapping(method = RequestMethod.GET)`. We use `GET` in this case because it is convenient for testing.
+Spring will still reject a GET request where the origin doesn't match the CORS configuration. 
+The browser is not required to send a CORS preflight request, but we could use `@PostMapping` and accept some JSON in the body if we wanted to trigger a pre-flight check.
 
 `@RequestParam` binds the value of the `name` query string parameter into the `name`
 parameter of the `greeting()` method. This query string parameter is not `required`. If it
@@ -352,13 +353,7 @@ Logging output is displayed. The service should be up and running within a few s
 
 == Test the service
 
-Now that the service is up, use `curl` (or your favourite HTTP client) to `POST` to `http://localhost:8080/greeting`
-
-====
-curl localhost:8080/greeting -X POST
-====
-
-where you should see:
+Now that the service is up, visit `http://localhost:8080/greeting` in your browser where you should see:
 
 ====
 [source,json]

@@ -23,7 +23,7 @@ public class GreetingIntegrationTests {
 	@Test
 	public void corsWithAnnotation() throws Exception {
 		ResponseEntity<Greeting> entity = this.restTemplate.exchange(
-				RequestEntity.post(uri("/greeting")).header(HttpHeaders.ORIGIN, "http://localhost:8080").build(),
+				RequestEntity.get(uri("/greeting")).header(HttpHeaders.ORIGIN, "http://localhost:8080").build(),
 				Greeting.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertEquals("http://localhost:8080", entity.getHeaders().getAccessControlAllowOrigin());
@@ -33,7 +33,7 @@ public class GreetingIntegrationTests {
 
 	@Test
 	public void corsWithJavaconfig() {
-		ResponseEntity<Greeting> entity = this.restTemplate.exchange(RequestEntity.post(uri("/greeting-javaconfig"))
+		ResponseEntity<Greeting> entity = this.restTemplate.exchange(RequestEntity.get(uri("/greeting-javaconfig"))
 				.header(HttpHeaders.ORIGIN, "http://localhost:8080").build(), Greeting.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertEquals("http://localhost:8080", entity.getHeaders().getAccessControlAllowOrigin());

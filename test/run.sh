@@ -4,8 +4,8 @@ mvn clean package
 java -jar target/rest-service-cors-0.0.1-SNAPSHOT.jar &
 PID=$!
 sleep 15
-curl -s http://localhost:8080/greeting -X POST > target/actual.json
-curl -s http://localhost:8080/greeting-javaconfig -X POST > target/actual-javaconfig.json
+curl -s http://localhost:8080/greeting > target/actual.json
+curl -s http://localhost:8080/greeting-javaconfig > target/actual-javaconfig.json
 kill -9 $PID
 
 echo "Let's look at the actual results: `cat target/actual.json`"
@@ -40,8 +40,8 @@ rm -rf target
 java -jar build/libs/rest-service-cors-0.0.1-SNAPSHOT.jar &
 PID=$!
 sleep 15
-curl -s http://localhost:8080/greeting  -X POST > build/actual.json
-curl -s http://localhost:8080/greeting-javaconfig  -X POST > build/actual-javaconfig.json
+curl -s http://localhost:8080/greeting  > build/actual.json
+curl -s http://localhost:8080/greeting-javaconfig  > build/actual-javaconfig.json
 kill -9 $PID
 
 echo "Let's look at the actual results: `cat build/actual.json`"

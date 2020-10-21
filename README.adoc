@@ -216,14 +216,12 @@ relying on a view technology to perform server-side rendering of the greeting da
 HTML, this RESTful web service controller populates and returns a `Greeting` object. The
 object data is written directly to the HTTP response as JSON.
 
-To accomplish this, the {ResponseBody}[`@ResponseBody`] annotation on the `greeting()`
-method tells Spring MVC that it does not need to render the greeting object through a
-server-side view layer. Instead, the returned greeting object is the response body and
-should be written out directly.
+To accomplish this, the {RestController}[`@RestController`] annotation
+assumes that every method inherits the {ResponseBody}[`@ResponseBody`] semantics by default.
+Therefore, a returned object data is inserted directly into the response body.
 
-The `Greeting` object must be converted to JSON. Thanks to Spring's HTTP message converter
-support, you need not do this conversion manually. Because {jackson}[Jackson] is on the
-classpath, Spring's
+Thanks to Spring's HTTP message converter support, the `Greeting` object is naturally converted to JSON.
+Because {jackson}[Jackson] is on the classpath, Spring's
 {MappingJackson2HttpMessageConverter}[`MappingJackson2HttpMessageConverter`] is
 automatically chosen to convert the `Greeting` instance to JSON.
 

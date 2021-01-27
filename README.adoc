@@ -1,20 +1,19 @@
 :spring_version: current
+:spring_boot_version: 2.4.2
 :jackson: https://wiki.fasterxml.com/JacksonHome
 :Controller: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
 :DispatcherServlet: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
 :SpringApplication: https://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
 :ResponseBody: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
 :MappingJackson2HttpMessageConverter: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
-:gs-rest-service: link:/guides/gs/rest-service/
-:gs-consuming-rest-jquery: link:/guides/gs/consuming-rest-jquery/
-:gs-spring-boot: link:/guides/gs/spring-boot/
+:gs-rest-service: https://spring.io/guides/gs/rest-service/
+:gs-consuming-rest-jquery: https://spring.io/guides/gs/rest-service/gs/consuming-rest-jquery/
+:gs-spring-boot: https://spring.io/guides/gs/rest-service/gs/spring-boot/
 :images: https://github.com/spring-guides/gs-rest-service-cors/raw/master/images
 :toc:
 :icons: font
 :source-highlighter: prettify
 :project_id: gs-rest-service-cors
-:spring_version: current
-:spring_boot_version: 2.3.2.RELEASE
 
 This guide walks you through the process of creating a "`Hello, World`" RESTful web
 service with Spring that includes headers for Cross-Origin Resource Sharing (CORS) in the
@@ -73,6 +72,7 @@ Initializr]. The Initializr offers a fast way to pull in all the dependencies yo
 an application and does a lot of the setup for you. This example needs only the Spring Web
 dependency.
 
+You can get a Maven build file with the necessary dependencies directly from the https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.4.2.RELEASE&packaging=jar&jvmVersion=11&groupId=com.example&artifactId=rest-service-cors&name=rest-service-cors&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.rest-service-cors&dependencies=web[Spring Initializr].
 The following listing shows the `pom.xml` file that is created when you choose Maven:
 
 ====
@@ -82,6 +82,7 @@ include::initial/pom.xml[]
 ----
 ====
 
+You can get a Gradle build file with the necessary dependencies directly from the https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.2.RELEASE&packaging=jar&jvmVersion=11&groupId=com.example&artifactId=rest-service-cors&name=rest-service-cors&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.rest-service-cors&dependencies=web[Spring Initializr].
 The following listing shows the `build.gradle` file that is created when you choose Gradle:
 
 ====
@@ -198,7 +199,7 @@ The `@RequestMapping` annotation ensures that HTTP requests to `/greeting` are m
 
 NOTE: The preceding example uses the `@GetMapping` annotation, which acts as a shortcut
 for `@RequestMapping(method = RequestMethod.GET)`. We use `GET` in this case because it is convenient for testing.
-Spring will still reject a GET request where the origin doesn't match the CORS configuration. 
+Spring will still reject a GET request where the origin doesn't match the CORS configuration.
 The browser is not required to send a CORS preflight request, but we could use `@PostMapping` and accept some JSON in the body if we wanted to trigger a pre-flight check.
 
 `@RequestParam` binds the value of the `name` query string parameter into the `name`
@@ -433,7 +434,7 @@ the following:
 
 image::{images}/hello.png[The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.]
 
-To test the CORS behaviour, you need to start the client from another server or port. 
+To test the CORS behaviour, you need to start the client from another server or port.
 Doing so not only avoids a collision
 between the two applications but also ensures that the client code is served from a
 different origin than the service. To start the app running on localhost at port 9000 (as well as the one that is already running on port 8080),

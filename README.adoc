@@ -9,7 +9,7 @@
 :gs-rest-service: https://spring.io/guides/gs/rest-service/
 :gs-consuming-rest-jquery: https://spring.io/guides/gs/rest-service/gs/consuming-rest-jquery/
 :gs-spring-boot: https://spring.io/guides/gs/rest-service/gs/spring-boot/
-:images: https://github.com/spring-guides/gs-rest-service-cors/raw/master/images
+:images: https://github.com/spring-guides/gs-rest-service-cors/raw/main/images
 :toc:
 :icons: font
 :source-highlighter: prettify
@@ -60,9 +60,9 @@ support to add the relevant CORS response headers.
 == What You Need
 
 :java_version: 1.8
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/prereq_editor_jdk_buildtools.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/how_to_complete_this_guide.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/how_to_complete_this_guide.adoc[]
 
 [[scratch]]
 == Starting with Spring Initializr
@@ -351,11 +351,11 @@ include::complete/src/main/java/com/example/restservicecors/RestServiceCorsAppli
 ----
 ====
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/spring-boot-application-new-path.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/spring-boot-application-new-path.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_an_executable_jar_subhead.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/build_an_executable_jar_subhead.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_an_executable_jar_with_both.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/build_an_executable_jar_with_both.adoc[]
 
 
 Logging output is displayed. The service should be up and running within a few seconds.
@@ -502,4 +502,4 @@ The following guides may also be helpful:
 * https://spring.io/guides/gs/spring-boot/[Building an Application with Spring Boot]
 
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
+include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/footer.adoc[]

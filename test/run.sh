@@ -1,6 +1,6 @@
 cd $(dirname $0)
 cd ../complete
-mvn clean package
+./mvnw clean package
 java -jar target/rest-service-cors-0.0.1-SNAPSHOT.jar &
 PID=$!
 sleep 15
@@ -74,7 +74,7 @@ rm -rf build
 
 cd ../initial
 
-mvn clean compile
+./mvnw clean compile
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret

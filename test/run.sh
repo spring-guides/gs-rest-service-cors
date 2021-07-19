@@ -1,7 +1,7 @@
 cd $(dirname $0)
 cd ../complete
 ./mvnw clean package
-java -jar target/rest-service-cors-0.0.1-SNAPSHOT.jar &
+java -jar target/rest-service-cors-complete-0.0.1-SNAPSHOT.jar &
 PID=$!
 sleep 15
 curl -s http://localhost:8080/greeting > target/actual.json

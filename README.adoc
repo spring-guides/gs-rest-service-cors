@@ -1,15 +1,10 @@
 :spring_version: current
-:spring_boot_version: current
 :jackson: https://wiki.fasterxml.com/JacksonHome
 :Controller: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
-:DispatcherServlet: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
-:SpringApplication: https://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
 :RestController: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/RestController.html
 :ResponseBody: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
 :MappingJackson2HttpMessageConverter: https://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html
 :gs-rest-service: https://spring.io/guides/gs/rest-service/
-:gs-consuming-rest-jquery: https://spring.io/guides/gs/rest-service/gs/consuming-rest-jquery/
-:gs-spring-boot: https://spring.io/guides/gs/rest-service/gs/spring-boot/
 :images: https://github.com/spring-guides/gs-rest-service-cors/raw/main/images
 :toc:
 :icons: font
@@ -395,11 +390,6 @@ shows:
 include::complete/public/index.html[]
 ----
 ====
-
-NOTE: This is essentially the REST client created in
-{gs-consuming-rest-jquery}[Consuming a RESTful Web Service with jQuery], modified slightly
-to consume the service when it runs on localhost at port 8080. See that guide for more
-details on how this client was developed.
 
 To start the client running on localhost at port 8080,
 run the following Maven command:

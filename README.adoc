@@ -77,20 +77,20 @@ NOTE: If your IDE has the Spring Initializr integration, you can complete this p
 
 NOTE: You can also fork the project from Github and open it in your IDE or other editor.
 
-=== Adding the `httpclient` Dependency
+=== Adding the `httpclient5` Dependency
 
 The tests (in
 `complete/src/test/java/com/example/restservicecors/GreetingIntegrationTests.java`)
-require the Apache `httpclient` library.
+require the Apache `httpclient5` library.
 
-To add the Apache `httpclient` library to Maven, add the following dependency:
+To add the Apache `httpclient5` library to Maven, add the following dependency:
 
 ====
 [source,xml]
 ----
 <dependency>
-  <groupId>org.apache.httpcomponents</groupId>
-  <artifactId>httpclient</artifactId>
+  <groupId>org.apache.httpcomponents.client5</groupId>
+  <artifactId>httpclient5</artifactId>
   <scope>test</scope>
 </dependency>
 ----
@@ -105,12 +105,12 @@ include::complete/pom.xml[]
 ----
 ====
 
-To add the Apache `httpclient` library to Gradle, add the following dependency:
+To add the Apache `httpclient5` library to Gradle, add the following dependency:
 
 ====
 [source,text]
 ----
-testImplementation 'org.apache.httpcomponents:httpclient'
+testImplementation 'org.apache.httpcomponents.client5:httpclient5'
 ----
 ====
 

@@ -246,10 +246,10 @@ attributes:
 * `allowCredentials`
 * `maxAge`.
 
-In this example, we allow only `http://localhost:8080` to send cross-origin requests.
+In this example, we allow only `http://localhost:9000` to send cross-origin requests.
 
 NOTE: You can also add the `@CrossOrigin` annotation at the controller class level as
-well, to enable  CORS on all handler methods of this class.
+well, to enable CORS on all handler methods of this class.
 
 [[global-cors-configuration]]
 === Global CORS configuration
@@ -391,39 +391,17 @@ include::complete/public/index.html[]
 ----
 ====
 
-To start the client running on localhost at port 8080,
-run the following Maven command:
-
-====
-[source,bash]
-----
-./mvnw spring-boot:run
-----
-====
-
-If you use Gradle, you can use this command:
-====
-[source,text]
-----
-./gradlew bootRun
-----
-====
-
-Once the app starts, open http://localhost:8080 in your browser, where you should see
-the following:
-
-image::{images}/hello.png[The browser will fail the request if the CORS headers are missing from the response. No data will be rendered into the DOM.]
-
 To test the CORS behaviour, you need to start the client from another server or port.
-Doing so not only avoids a collision
-between the two applications but also ensures that the client code is served from a
-different origin than the service. To start the app running on localhost at port 9000 (as well as the one that is already running on port 8080),
-run the following Maven command:
+Doing so not only avoids a collision between the two applications, but also ensures that the client code is served from a
+different origin than the service.
+
+To start the client running on localhost at port 9000, keep the application running at port 8080 and
+run the following Maven command in another terminal:
 
 ====
 [source,bash]
 ----
-./mvnw spring-boot:run -Dserver.port=9000
+./mvnw spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=9000'
 ----
 ====
 
@@ -436,13 +414,37 @@ If you use Gradle, you can use this command:
 ====
 
 Once the app starts, open http://localhost:9000 in your browser, where you should see
+the following because the service response includes the relevant CORS headers, so the ID and content are rendered into
+the page:
+
+image::{images}/hello.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
+
+Now, stop the application running at port 9000, keep the application running at port 8080 and run the following Maven
+command in another terminal:
+
+====
+[source,bash]
+----
+./mvnw spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=9001'
+----
+====
+
+If you use Gradle, you can use this command:
+====
+[source,text]
+----
+./gradlew bootRun --args="--server.port=9001"
+----
+====
+
+Once the app starts, open http://localhost:9001 in your browser, where you should see
 the following:
 
-image::{images}/hello_fail.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
+image::{images}/hello_fail.png[The browser will fail the request if the CORS headers are missing (or insufficient for theclient) from the response. No data will be rendered into the DOM.]
 
-If the service response includes the CORS headers, then the ID and content are rendered
-into the page. But if the CORS headers are missing (or insufficient for the
-client), the browser fails the request and the values are not rendered into the DOM.
+Here, the browser fails the request and the values are not rendered into the DOM because the CORS headers are missing
+(or insufficient for the client), since we only allowed cross-origin requests from http://localhost:9000, not
+http://localhost:9001.
 
 
 == Summary

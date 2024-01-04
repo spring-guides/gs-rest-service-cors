@@ -240,6 +240,7 @@ can customize this behavior by specifying the value of one of the following anno
 attributes:
 
 * `origins`
+* `originPatterns`
 * `methods`
 * `allowedHeaders`
 * `exposedHeaders`

@@ -260,7 +260,7 @@ include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingCon
 ====
 
 This `@CrossOrigin` annotation enables cross-origin resource sharing only for this
-specific method. By default, its allows all origins, all headers, and the HTTP methods
+specific method. By default, it allows all origins, all headers, and the HTTP methods
 specified in the `@RequestMapping` annotation. Also, a `maxAge` of 30 minutes is used. You
 can customize this behavior by specifying the value of one of the following annotation
 attributes:

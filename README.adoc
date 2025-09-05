@@ -68,20 +68,18 @@ To manually initialize the project:
 
 . Navigate to https://start.spring.io.
 This service pulls in all the dependencies you need for an application and does most of the setup for you.
-. Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
+. Choose either Gradle or Maven and the language you want to use.
 . Click *Dependencies* and select *Spring Web*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
 NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
 
-NOTE: You can also fork the project from Github and open it in your IDE or other editor.
+NOTE: You can also fork the project from GitHub and open it in your IDE or other editor.
 
 === Adding the `httpclient5` Dependency
 
-The tests (in
-`complete/src/test/java/com/example/restservicecors/GreetingIntegrationTests.java`)
-require the Apache `httpclient5` library.
+The tests require the Apache `httpclient5` library.
 
 To add the Apache `httpclient5` library to Maven, add the following dependency:
 
@@ -108,18 +106,30 @@ include::complete/pom.xml[]
 To add the Apache `httpclient5` library to Gradle, add the following dependency:
 
 ====
-[source,text]
+[source,groovy,indent=0,subs="verbatim,quotes",role="primary"]
+.Groovy (build.gradle)
 ----
 testImplementation 'org.apache.httpcomponents.client5:httpclient5'
 ----
-====
-
-The following listing shows the finished `build.gradle` file:
-
-====
-[source,xml]
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin (build.gradle.kts)
 ----
-include::complete/build.gradle[]
+testImplementation("org.apache.httpcomponents.client5:httpclient5')
+----
+====
+
+The following listing shows the finished `build.gradle(.kts)` file:
+
+====
+[source,groovy,indent=0,subs="verbatim,quotes",role="primary"]
+.Groovy (build.gradle)
+----
+include::complete/build.gradle[tags=**]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin (build.gradle.kts)
+----
+include::complete-kotlin/build.gradle.kts[tags=**]
 ----
 ====
 
@@ -148,14 +158,19 @@ The `id` field is a unique identifier for the greeting, and `content` is the tex
 representation of the greeting.
 
 To model the greeting representation, create a resource representation class. Provide a
-plain old Java object with fields, constructors, and accessors for the `id` and `content`
-data, as the following listing (from
-  `src/main/java/com/example/restservicecors/Greeting.java`) shows:
+simple data representation (POJO in Java or data class in Kotlin) with fields, constructors, and accessors for the `id` and `content`
+data, as the following listing show:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::complete/src/main/java/com/example/restservicecors/Greeting.java[]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/Greeting.kt[]
 ----
 ====
 
@@ -166,14 +181,19 @@ of type `Greeting` into JSON.
 
 In Spring's approach to building RESTful web services, HTTP requests are handled by a
 controller. These components are easily identified by the {Controller}[`@Controller`]
-annotation, and the `GreetingController` shown in the following listing (from
-`src/main/java/com/example/restservicecors/GreetingController.java`) handles `GET`
+annotation, and the `GreetingController` shown in the following listing handles `GET`
 requests for `/greeting` by returning a new instance of the `Greeting` class:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
-include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=1..15;17..22;29..30]
+include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=1..22;29]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingController.kt[lines=1..19;26]
 ----
 ====
 
@@ -204,7 +224,7 @@ object data is written directly to the HTTP response as JSON.
 
 To accomplish this, the {RestController}[`@RestController`] annotation
 assumes that every method inherits the {ResponseBody}[`@ResponseBody`] semantics by default.
-Therefore, a returned object data is inserted directly into the response body.
+Therefore, returned object data is inserted directly into the response body.
 
 Thanks to Spring's HTTP message converter support, the `Greeting` object is naturally converted to JSON.
 Because {jackson}[Jackson] is on the classpath, Spring's
@@ -224,12 +244,18 @@ globally. The following topics describe how to do so:
 
 So that the RESTful web service will include CORS access control headers in its response,
 you have to add a `@CrossOrigin` annotation to the handler method, as the following
-listing (from `src/main/java/com/example/restservicecors/GreetingController.java`) shows:
+listing show:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
-include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=16..21]
+include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=16..22]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingController.kt[lines=14..19]
 ----
 ====
 
@@ -260,14 +286,19 @@ define some global CORS configuration as well. This is similar to using a `Filte
 be declared within Spring MVC and combined with fine-grained `@CrossOrigin` configuration.
 By default, all origins and `GET`, `HEAD`, and `POST` methods are allowed.
 
-The following listing (from
-`src/main/java/com/example/restservicecors/GreetingController.java`) shows the
+The following listing show the
 `greetingWithJavaconfig` method in the `GreetingController` class:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
-include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=23..27]
+include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=24..28]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingController.kt[lines=21..25]
 ----
 ====
 
@@ -276,14 +307,18 @@ NOTE: The difference between the `greetingWithJavaconfig` method and the `greeti
 is the route (`/greeting-javaconfig` rather than `/greeting`) and the presence of the
 `@CrossOrigin` origin.
 
-The following listing (from
-`src/main/java/com/example/restservicecors/RestServiceCorsApplication.java`) shows how to
-add CORS mapping in the application class:
+The following listing shows how to add CORS mapping in the application class:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
-include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[lines=17..25]
+include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[lines=17..24]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[lines=13..17]
 ----
 ====
 
@@ -295,35 +330,49 @@ TIP: You can combine global- and controller-level CORS configuration.
 == Creating the Application Class
 
 The Spring Initializr creates a bare-bones application class for you. The following
-listing (from
-`initial/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java`) shows
-that initial class:
+listing shows that initial class:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::initial/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::initial-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[]
 ----
 ====
 
 You need to add a method to configure how to handle cross-origin resource sharing. The
-following listing (from
-`complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java`)
-shows how to do so:
+following listing shows how to do so:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[lines=16..24]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[lines=12..17]
 ----
 ====
 
 The following listing shows the completed application class:
 
 ====
-[source,java]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[]
 ----
 ====
 
@@ -366,12 +415,12 @@ Also, the `id` attribute has changed from `1` to `2`. This proves that you are w
 against the same `GreetingController` instance across multiple requests and that its
 `counter` field is being incremented on each call, as expected.
 
-Now you can test that the CORS headers are in place and allow a Javascript client from
-another origin to access the service. To do so, you need to create a Javascript client to
+Now you can test that the CORS headers are in place and allow a JavaScript client from
+another origin to access the service. To do so, you need to create a JavaScript client to
 consume the service. The following listing shows such a client:
 
 
-First, create a simple Javascript file named `hello.js` (from `complete/public/hello.js`)
+First, create a simple JavaScript file named `hello.js` (from `public/hello.js`)
 with the following content:
 
 ====
@@ -382,7 +431,7 @@ include::complete/public/hello.js[]
 ====
 
 This script uses jQuery to consume the REST service at `http://localhost:8080/greeting`.
-It is loaded by `index.html`, as the following listing (from `complete/public/index.html`)
+It is loaded by `index.html`, as the following listing (from `public/index.html`)
 shows:
 
 ====
@@ -392,7 +441,7 @@ include::complete/public/index.html[]
 ----
 ====
 
-To test the CORS behaviour, you need to start the client from another server or port.
+To test the CORS behavior, you need to start the client from another server or port.
 Doing so not only avoids a collision between the two applications, but also ensures that the client code is served from a
 different origin than the service.
 
@@ -420,7 +469,7 @@ the page:
 
 image::{images}/hello.png[Model data retrieved from the REST service is rendered into the DOM if the proper CORS headers are in the response.]
 
-Now, stop the application running at port 9000, keep the application running at port 8080 and run the following Maven
+Now, stop the application running at port 9000, keep the application running at port 8080, and run the following Maven
 command in another terminal:
 
 ====

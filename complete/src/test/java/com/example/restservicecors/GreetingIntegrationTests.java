@@ -2,6 +2,7 @@ package com.example.restservicecors;
 
 import java.net.URI;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class GreetingIntegrationTests {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
 		Greeting greeting = entity.getBody();
+		Assertions.assertNotNull(greeting);
 		assertEquals("Hello, World!", greeting.getContent());
 	}
 
@@ -38,6 +40,7 @@ public class GreetingIntegrationTests {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
 		Greeting greeting = entity.getBody();
+		Assertions.assertNotNull(greeting);
 		assertEquals("Hello, World!", greeting.getContent());
 	}
 

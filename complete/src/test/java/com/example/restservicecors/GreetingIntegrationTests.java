@@ -30,7 +30,7 @@ public class GreetingIntegrationTests {
 		assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
 		Greeting greeting = entity.getBody();
 		Assertions.assertNotNull(greeting);
-		assertEquals("Hello, World!", greeting.getContent());
+		assertEquals("Hello, World!", greeting.content());
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class GreetingIntegrationTests {
 		assertEquals("http://localhost:9000", entity.getHeaders().getAccessControlAllowOrigin());
 		Greeting greeting = entity.getBody();
 		Assertions.assertNotNull(greeting);
-		assertEquals("Hello, World!", greeting.getContent());
+		assertEquals("Hello, World!", greeting.content());
 	}
 
 	private URI uri(String path) {

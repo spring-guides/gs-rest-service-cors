@@ -68,7 +68,7 @@ To manually initialize the project:
 
 . Navigate to https://start.spring.io.
 This service pulls in all the dependencies you need for an application and does most of the setup for you.
-. Choose either Gradle or Maven and the language you want to use: Kotlin or Java.
+. Choose either Gradle or Maven and the language you want to use.
 . Click *Dependencies* and select *Spring Web*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
@@ -158,7 +158,7 @@ The `id` field is a unique identifier for the greeting, and `content` is the tex
 representation of the greeting.
 
 To model the greeting representation, create a resource representation class. Provide a
-simple data representation (POJO in Java or data class in Kotlin) with fields, constructors, and accessors for the `id` and `content`
+simple data representation (record in Java or data class in Kotlin) with fields, constructors, and accessors for the `id` and `content`
 data, as the following listing show:
 
 ====
@@ -174,7 +174,7 @@ include::complete-kotlin/src/main/kotlin/com/example/restservicecors/Greeting.kt
 ----
 ====
 
-NOTE: Spring uses the {jackson}[Jackson JSON] library to automatically marshal instances
+NOTE: Spring uses the {jackson}[Jackson JSON] library to automatically serialize instances
 of type `Greeting` into JSON.
 
 == Create a Resource Controller
@@ -188,12 +188,12 @@ requests for `/greeting` by returning a new instance of the `Greeting` class:
 [source,java,indent=0,subs="verbatim,quotes",role="primary"]
 .Java
 ----
-include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=1..22;29]
+include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=1..16;18..23;29]
 ----
 [source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
 .Kotlin
 ----
-include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingController.kt[lines=1..19;26]
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/GreetingController.kt[lines=1..13;15..20;26]
 ----
 ====
 
@@ -250,7 +250,7 @@ listing show:
 [source,java,indent=0,subs="verbatim,quotes",role="primary"]
 .Java
 ----
-include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=16..22]
+include::complete/src/main/java/com/example/restservicecors/GreetingController.java[lines=17..22]
 ----
 [source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
 .Kotlin
@@ -313,12 +313,12 @@ The following listing shows how to add CORS mapping in the application class:
 [source,java,indent=0,subs="verbatim,quotes",role="primary"]
 .Java
 ----
-include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[lines=17..24]
+include::complete/src/main/java/com/example/restservicecors/RestServiceCorsApplication.java[lines=16..24]
 ----
 [source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
 .Kotlin
 ----
-include::complete-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[lines=13..17]
+include::complete-kotlin/src/main/kotlin/com/example/restservicecors/RestServiceCorsApplication.kt[lines=12..17]
 ----
 ====
 

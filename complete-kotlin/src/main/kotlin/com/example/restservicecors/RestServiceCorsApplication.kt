@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class RestServiceCorsApplication {
 
     @Bean
-    fun corsConfigurer(): WebMvcConfigurer = object : WebMvcConfigurer {
+    fun corsConfigurer() = object : WebMvcConfigurer {
         override fun addCorsMappings(registry: CorsRegistry) {
             registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000")
         }

@@ -62,7 +62,7 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 [[scratch]]
 == Starting with Spring Initializr
 
-You can use this https://start.spring.io/#!type=maven-project&groupId=com.example&artifactId=rest-service-cors&name=rest-service-cors&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.restservicecors&dependencies=web[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
+You can use this https://start.spring.io/#!type=gradle-project&groupId=com.example&language=java&jvmVersion=17&packaging=jar&artifactId=rest-service-cors&packageName=com.example.restservicecors&dependencies=web[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
 
 To manually initialize the project:
 

@@ -12,9 +12,7 @@ import org.springframework.test.web.servlet.client.expectBody
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestTestClient
-class GreetingIntegrationTests @Autowired constructor(
-    private val testClient: RestTestClient
-) {
+class GreetingIntegrationTests(@Autowired private val testClient: RestTestClient) {
 
     @Test
     fun `cors with annotation`() {

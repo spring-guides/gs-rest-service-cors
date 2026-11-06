@@ -46,4 +46,27 @@ public class GreetingIntegrationTests {
 				});
 	}
 
+	@Test
+	public void clientResourcesAreOnClasspath() {
+		Assertions.assertAll(
+				() -> Assertions.assertNotNull(getClass().getResource("/static/index.html")),
+				() -> Assertions.assertNotNull(getClass().getResource("/static/hello.js")));
+	}
+
+	@Test
+	public void clientIndexIsAvailable() {
+		this.testClient.get().uri("/")
+				.exchangeSuccessfully()
+				.expectBody(String.class)
+				.value(body -> Assertions.assertTrue(body.contains("<script src=\"hello.js\"></script>")));
+	}
+
+	@Test
+	public void clientScriptIsAvailable() {
+		this.testClient.get().uri("/hello.js")
+				.exchangeSuccessfully()
+				.expectBody(String.class)
+				.value(body -> Assertions.assertTrue(body.contains("http://localhost:8080/greeting")));
+	}
+
 }

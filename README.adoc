@@ -420,26 +420,29 @@ another origin to access the service. To do so, you need to create a JavaScript 
 consume the service. The following listing shows such a client:
 
 
-First, create a simple JavaScript file named `hello.js` (from `public/hello.js`)
+First, create a simple JavaScript file named `hello.js` (from `src/main/resources/static/hello.js`)
 with the following content:
 
 ====
 [source,js]
 ----
-include::complete/public/hello.js[]
+include::complete/src/main/resources/static/hello.js[]
 ----
 ====
 
 This script uses jQuery to consume the REST service at `http://localhost:8080/greeting`.
-It is loaded by `index.html`, as the following listing (from `public/index.html`)
+It is loaded by `index.html`, as the following listing (from `src/main/resources/static/index.html`)
 shows:
 
 ====
 [source,html]
 ----
-include::complete/public/index.html[]
+include::complete/src/main/resources/static/index.html[]
 ----
 ====
+
+Spring Boot serves these files from the classpath, so the client is available both when
+running the application from the source project and from an executable JAR.
 
 To test the CORS behavior, you need to start the client from another server or port.
 Doing so not only avoids a collision between the two applications, but also ensures that the client code is served from a

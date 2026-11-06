@@ -47,6 +47,13 @@ public class GreetingIntegrationTests {
 	}
 
 	@Test
+	public void clientResourcesAreOnClasspath() {
+		Assertions.assertAll(
+				() -> Assertions.assertNotNull(getClass().getResource("/static/index.html")),
+				() -> Assertions.assertNotNull(getClass().getResource("/static/hello.js")));
+	}
+
+	@Test
 	public void clientIndexIsAvailable() {
 		this.testClient.get().uri("/")
 				.exchangeSuccessfully()

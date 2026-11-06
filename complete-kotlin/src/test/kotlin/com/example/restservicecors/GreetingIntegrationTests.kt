@@ -43,6 +43,14 @@ class GreetingIntegrationTests(@Autowired private val testClient: RestTestClient
     }
 
     @Test
+    fun `client resources are on classpath`() {
+        Assertions.assertAll(
+            { Assertions.assertNotNull(javaClass.getResource("/static/index.html")) },
+            { Assertions.assertNotNull(javaClass.getResource("/static/hello.js")) }
+        )
+    }
+
+    @Test
     fun `client index is available`() {
         this.testClient.get().uri("/")
             .exchangeSuccessfully()
